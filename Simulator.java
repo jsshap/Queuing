@@ -133,6 +133,16 @@ public class Simulator {
 
     }
 
+    void exportDataToCSV(LinkedList<Job> completed){
+        System.out.println("Arrival Time,Departure Time,Service Time,Time In Queue,Total Time");
+        for (Job j : completed){
+            System.out.println(j.arrivalTime + "," 
+            + j.departureTime + "," 
+            + j.serviceLength + "," 
+            + j.timeInQ + "," + j.totalTime);
+        }
+    }
+
     int findTimeOfNextEvent(LinkedList<Job> jobs){
         //return min of next arrival, time of completion of current job
         if (jobs.isEmpty()){
