@@ -1,6 +1,6 @@
 import java.util.LinkedList;
 
-enum Policy{FCFS, SHORTEST_FIRST, LONGEST_FIRST;}
+enum Policy{FCFS, LCFS, SHORTEST_FIRST, LONGEST_FIRST;}
 
 public class Simulator {
 
@@ -37,9 +37,16 @@ public class Simulator {
 
             timeOfNextEvent= findTimeOfNextEvent(jobs);
             time = timeOfNextEvent;
+            
+            int nextDepartureTime = -1;
+            int nextArrival = -1;
 
-            int nextDepartureTime = currentJob.departureTime;
-            int nextArrival = jobs.peekFirst().arrivalTime;
+            if (currentJob != null){
+                nextDepartureTime = currentJob.departureTime;
+            }
+            if (!jobs.isEmpty()){
+                nextArrival = jobs.peekFirst().arrivalTime;
+            }
 
 
             if (time == nextArrival){
@@ -80,6 +87,40 @@ public class Simulator {
     void processArrival(Job j, Policy p){
         //grab from top of jobs list
         //place into Queue according to policy
+        if (queue.isEmpty()){
+            queue.add(j);
+            return;
+        //This prevents any null pointers from an empty list
+        }
+        
+
+        if (p == Policy.FCFS){
+            queue.addLast(j);
+        }
+        else if ( p == Policy.SHORTEST_FIRST){
+            int i = 0;
+            while (j.serviceLength>queue.get(i).serviceLength){
+                i++;
+            }
+            //insert job j into the queue at index i, which should be the first index 
+            //where the job's service time is not greater than that of the preceding elelemt
+            queue.add(i, j);
+        }
+        else if ( p == Policy.LONGEST_FIRST){
+            //This clause is the same as the one above, but switch the inequality
+            int i = 0;
+            while (j.serviceLength<queue.get(i).serviceLength){
+                i++;
+            }
+            //insert job j into the queue at index i, which should be the first index 
+            //where the job's service time is not less than that of the preceding elelemt
+            queue.add(i, j);
+        }
+        else if ( p == Policy.LCFS){
+            queue.addFirst(j);
+        }
+
+
     }
 
     void analyze(LinkedList<Job> completed){
@@ -89,6 +130,14 @@ public class Simulator {
 
     int findTimeOfNextEvent(LinkedList<Job> jobs){
         //return min of next arrival, time of completion of current job
+        if (jobs.isEmpty()){
+            return currentJob.arrivalTime+currentJob.serviceLength;
+        }
+        else if (currentJob == null){
+            return jobs.peekFirst().arrivalTime;
+        }
+        //Only on of those can occur. If neither does, then we won't have any null pointer problems
+
         return Math.min(jobs.peekFirst().arrivalTime, currentJob.arrivalTime+currentJob.serviceLength);
     }
 
