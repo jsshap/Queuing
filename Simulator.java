@@ -34,12 +34,9 @@ public class Simulator {
             proceed to next event
             either process arrival or process departure
         }
-
-
         */
         while (!(jobs.isEmpty() && queue.isEmpty())){
             //while either jobs or queue has elements in it
-
             timeOfNextEvent= findTimeOfNextEvent(jobs);
             time = timeOfNextEvent;
             
@@ -53,7 +50,6 @@ public class Simulator {
                 nextArrival = jobs.peekFirst().arrivalTime;
             }
 
-
             if (time == nextArrival){
                 //Add all jobs in jobs list where arrival time is right now
                 while (jobs.peekFirst().arrivalTime==time){
@@ -63,44 +59,32 @@ public class Simulator {
             if (time == nextDepartureTime){
                 processJob();
             }
-
         }
-        /*
-        take job from jobs, add to queue, select job from queue (based on policy), add jobs to completed list
-        then alyze completed list
-        */
-        /*
-        processJob(j)
-        remove j from queue and put on completed list
-
-        */
-
     }
 
-    void processJob(){//j is the new job, the first in the queue
-
+    void processJob(){
         //kick out current job then start the next one
         currentJob.departureTime=time;
         currentJob.calculateValues();
         completed.add(currentJob);
         
-        //j was the first in the queue, now it is current
-        currentJob=queue.removeFirst();//this removes j from the queue
-
+        currentJob=queue.removeFirst();
+        //set current job to be first from the q and then remove it
     }
 
     void processArrival(Job j){
-        //grab from top of jobs list
-        //place into Queue according to policy
+
         if (queue.isEmpty()){
             queue.add(j);
             return;
         //This prevents any null pointers from an empty list
         }
         
-
+        //If there already is a queue, then add according to the policy of this instance of Simulator
+        //Process always takes from the fron of the queue
         if (this.policy == Policy.FCFS){
             queue.addLast(j);
+            //first come first serve, add to end of line
         }
         else if ( this.policy == Policy.SHORTEST_FIRST){
             int i = 0;
@@ -122,10 +106,9 @@ public class Simulator {
             queue.add(i, j);
         }
         else if ( this.policy == Policy.LCFS){
+            //last come first serve
             queue.addFirst(j);
         }
-
-
     }
 
     void analyze(LinkedList<Job> completed){
@@ -151,10 +134,8 @@ public class Simulator {
         else if (currentJob == null){
             return jobs.peekFirst().arrivalTime;
         }
-        //Only on of those can occur. If neither does, then we won't have any null pointer problems
+        //Only on of those cases can occur. If neither does, then we won't have any null pointer problems
 
         return Math.min(jobs.peekFirst().arrivalTime, currentJob.arrivalTime+currentJob.serviceLength);
     }
-
-
 }

@@ -1,23 +1,11 @@
-/*
-immutable:
-
-serviceLength/job size, arrival
-
-
-figure out later at runtime:
-departure time --> can calculate wait time in Queue
-time in q
-
-*/
-
 public class Job{
 
-    final int serviceLength;
+    final int serviceLength;//work needed on the job
     final int arrivalTime;
 
     int departureTime=0;
     int timeInQ=0;
-    int totalTime=0;
+    int totalTime=0;//service time and time in q
 
     public Job(int serviceLength, int arrivalTime){
         this.serviceLength = serviceLength;
