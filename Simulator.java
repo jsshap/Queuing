@@ -1,5 +1,9 @@
 import java.util.LinkedList;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.FileWriter;
+
 enum Policy{FCFS, LCFS, SHORTEST_FIRST, LONGEST_FIRST, RANDOM;}
 
 public class Simulator {
@@ -120,14 +124,29 @@ public class Simulator {
 
     }
 
-    void exportDataToCSV(LinkedList<Job> completed){
-        System.out.println("Arrival Time,Departure Time,Service Time,Time In Queue,Total Time");
-        for (Job j : completed){
-            System.out.println(j.arrivalTime + "," 
-            + j.departureTime + "," 
-            + j.serviceLength + "," 
-            + j.timeInQ + "," + j.totalTime);
+    void exportDataToCSV(String filename){
+
+        try {
+            FileWriter writer = new FileWriter(filename);
+            writer.write("Arrival Time,Departure Time,Service Time,Time In Queue,Total Time\n");
+            for (Job j : completed) {
+                writer.write(
+                j.arrivalTime + "," 
+                + j.departureTime + "," 
+                + j.serviceLength + "," 
+                + j.timeInQ + ","
+                + j.totalTime + "\n");
+            }
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
         }
+        
+    }
+
+    void exportDataToCSV(){
+        exportDataToCSV("data.csv");
     }
 
     int findTimeOfNextEvent(LinkedList<Job> jobs){
