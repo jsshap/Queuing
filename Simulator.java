@@ -4,6 +4,8 @@ enum Policy{FCFS, LCFS, SHORTEST_FIRST, LONGEST_FIRST;}
 
 public class Simulator {
 
+    Policy policy;
+
     LinkedList<Job> queue;   
     LinkedList<Job> completed;
 
@@ -12,15 +14,18 @@ public class Simulator {
 
     Job currentJob;
 
-    public Simulator(){
+    public Simulator(Policy p){
         time=0;
         timeOfNextEvent=0;
         queue= new LinkedList<Job>();
         completed = new LinkedList<Job>();
         currentJob = null;
+
+        this.policy=p;
+
     }
 
-    void simulate(LinkedList<Job> jobs, Policy p){//figure out how to use enumerated types for this
+    void simulate(LinkedList<Job> jobs){//figure out how to use enumerated types for this
 
 
         /*
@@ -52,7 +57,7 @@ public class Simulator {
             if (time == nextArrival){
                 //Add all jobs in jobs list where arrival time is right now
                 while (jobs.peekFirst().arrivalTime==time){
-                    processArrival(jobs.removeFirst(), p);
+                    processArrival(jobs.removeFirst());
                 }
             }
             if (time == nextDepartureTime){
@@ -84,7 +89,7 @@ public class Simulator {
 
     }
 
-    void processArrival(Job j, Policy p){
+    void processArrival(Job j){
         //grab from top of jobs list
         //place into Queue according to policy
         if (queue.isEmpty()){
@@ -94,10 +99,10 @@ public class Simulator {
         }
         
 
-        if (p == Policy.FCFS){
+        if (this.policy == Policy.FCFS){
             queue.addLast(j);
         }
-        else if ( p == Policy.SHORTEST_FIRST){
+        else if ( this.policy == Policy.SHORTEST_FIRST){
             int i = 0;
             while (j.serviceLength>queue.get(i).serviceLength){
                 i++;
@@ -106,7 +111,7 @@ public class Simulator {
             //where the job's service time is not greater than that of the preceding elelemt
             queue.add(i, j);
         }
-        else if ( p == Policy.LONGEST_FIRST){
+        else if ( this.policy == Policy.LONGEST_FIRST){
             //This clause is the same as the one above, but switch the inequality
             int i = 0;
             while (j.serviceLength<queue.get(i).serviceLength){
@@ -116,7 +121,7 @@ public class Simulator {
             //where the job's service time is not less than that of the preceding elelemt
             queue.add(i, j);
         }
-        else if ( p == Policy.LCFS){
+        else if ( this.policy == Policy.LCFS){
             queue.addFirst(j);
         }
 
