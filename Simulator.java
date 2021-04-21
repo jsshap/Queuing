@@ -11,14 +11,16 @@ public class Simulator {
 
     
     static LinkedList<Job> queue = new LinkedList<Job>();    
-    static int time;
-    static int timeOfNextEvent;
+    static int time=0;
+    static int timeOfNextEvent=0;
 
     static LinkedList<Job> completed = new LinkedList<Job>();
 
-    void setup(){
+    void startNewSimulator(){
         time=0;
         timeOfNextEvent=0;
+        queue= new LinkedList<Job>();
+        completed = new LinkedList<Job>();
 
     }
 
@@ -56,7 +58,7 @@ public class Simulator {
         //update instance variables of job and remove from queue
     }
 
-    void jobArrival(Policy p){
+    void jobArrival(Job j, Policy p){
         //grab from top of jobs list
         //place into Queue according to policy
     }
