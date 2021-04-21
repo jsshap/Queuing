@@ -4,20 +4,20 @@ enum Policy{FCFS, LCFS, SHORTEST_FIRST, LONGEST_FIRST;}
 
 public class Simulator {
 
-    static LinkedList<Job> queue = new LinkedList<Job>();    
-    static int time=0;
-    static int timeOfNextEvent=0;
-    static Job currentJob;
+    LinkedList<Job> queue;   
+    LinkedList<Job> completed;
 
-    static LinkedList<Job> completed = new LinkedList<Job>();
+    int time;
+    int timeOfNextEvent;
 
-    void startNewSimulator(){
+    Job currentJob;
+
+    public Simulator(){
         time=0;
         timeOfNextEvent=0;
         queue= new LinkedList<Job>();
         completed = new LinkedList<Job>();
         currentJob = null;
-
     }
 
     void simulate(LinkedList<Job> jobs, Policy p){//figure out how to use enumerated types for this
