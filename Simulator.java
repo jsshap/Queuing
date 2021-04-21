@@ -4,12 +4,10 @@ enum Policy{FCFS, SHORTEST_FIRST, LONGEST_FIRST;}
 
 public class Simulator {
 
-
-
-
     static LinkedList<Job> queue = new LinkedList<Job>();    
     static int time=0;
     static int timeOfNextEvent=0;
+    static Job currentJob;
 
     static LinkedList<Job> completed = new LinkedList<Job>();
 
@@ -18,6 +16,7 @@ public class Simulator {
         timeOfNextEvent=0;
         queue= new LinkedList<Job>();
         completed = new LinkedList<Job>();
+        currentJob = null;
 
     }
 
@@ -33,13 +32,30 @@ public class Simulator {
 
 
         */
+        while (!(jobs.isEmpty() && queue.isEmpty())){
+            //while either jobs or queue has elements in it
+
+            timeOfNextEvent= findTimeOfNextEvent(jobs);
+            time = timeOfNextEvent;
+
+            int nextDepartureTime = currentJob.departureTime;
+            int nextArrival = jobs.peekFirst().arrivalTime;
 
 
+            if (time == nextArrival){
+                //Add all jobs in jobs list where arrival time is right now
+                while (jobs.peekFirst().arrivalTime==time){
+                    processArrival(jobs.removeFirst(), p);
+                }
+            }
+            if (time == nextDepartureTime){
+                processJob();
+            }
+
+        }
         /*
         take job from jobs, add to queue, select job from queue (based on policy), add jobs to completed list
-
         then alyze completed list
-
         */
         /*
         processJob(j)
@@ -49,13 +65,19 @@ public class Simulator {
 
     }
 
-    void processJob(Job j){
-        //Take first job in queue
-            //jobArrival guarentees the will be in the right order for our policy
-        //update instance variables of job and remove from queue
+    void processJob(){//j is the new job, the first in the queue
+
+        //kick out current job then start the next one
+        currentJob.departureTime=time;
+        currentJob.calculateValues();
+        completed.add(currentJob);
+        
+        //j was the first in the queue, now it is current
+        currentJob=queue.removeFirst();//this removes j from the queue
+
     }
 
-    void jobArrival(Job j, Policy p){
+    void processArrival(Job j, Policy p){
         //grab from top of jobs list
         //place into Queue according to policy
     }
@@ -63,6 +85,11 @@ public class Simulator {
     void analyze(LinkedList<Job> completed){
         //do stuff
 
+    }
+
+    int findTimeOfNextEvent(LinkedList<Job> jobs){
+        //return min of next arrival, time of completion of current job
+        return Math.min(jobs.peekFirst().arrivalTime, currentJob.arrivalTime+currentJob.serviceLength);
     }
 
 
