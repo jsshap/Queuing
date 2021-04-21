@@ -1,6 +1,6 @@
 import java.util.LinkedList;
 
-enum Policy{FCFS, LCFS, SHORTEST_FIRST, LONGEST_FIRST;}
+enum Policy{FCFS, LCFS, SHORTEST_FIRST, LONGEST_FIRST, RANDOM;}
 
 public class Simulator {
 
@@ -108,6 +108,10 @@ public class Simulator {
         else if ( this.policy == Policy.LCFS){
             //last come first serve
             queue.addFirst(j);
+        }
+        else if (this.policy== Policy.RANDOM){
+            queue.add((int)Math.random()*queue.size(), j);
+
         }
     }
 
