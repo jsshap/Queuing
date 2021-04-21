@@ -1,15 +1,12 @@
 import java.util.LinkedList;
 
+enum Policy{FCFS, SHORTEST_FIRST, LONGEST_FIRST;}
 
 public class Simulator {
 
-    enum Policy
-    {
-    FCFS, SHORTEST_FIRST, LONGEST_FIRST;
-    }
 
 
-    
+
     static LinkedList<Job> queue = new LinkedList<Job>();    
     static int time=0;
     static int timeOfNextEvent=0;

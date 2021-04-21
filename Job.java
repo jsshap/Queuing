@@ -9,6 +9,25 @@ departure time --> can calculate wait time in Queue
 time in q
 
 */
+
 public class Job{
+
+    final int serviceLength;
+    final int arrivalTime;
+
+    int departureTime=0;
+    int timeInQ=0;
+
+    public Job(int serviceLength, int arrivalTime){
+        this.serviceLength = serviceLength;
+        this.arrivalTime = arrivalTime;
+    }
+
+    public void calculateValues(){
+        timeInQ = departureTime-serviceLength-arrivalTime;
+        
+        
+    }
+
 
 }
