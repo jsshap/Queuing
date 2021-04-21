@@ -1,6 +1,5 @@
 import java.util.LinkedList;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.FileWriter;
 
@@ -126,6 +125,7 @@ public class Simulator {
 
     void exportDataToCSV(String filename){
 
+        //https://www.w3schools.com/java/java_files_create.asp
         try {
             FileWriter writer = new FileWriter(filename);
             writer.write("Arrival Time,Departure Time,Service Time,Time In Queue,Total Time\n");
