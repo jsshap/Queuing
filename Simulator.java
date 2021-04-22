@@ -41,6 +41,7 @@ public class Simulator {
         while (!(jobs.isEmpty() && queue.isEmpty())){
             //while either jobs or queue has elements in it
             timeOfNextEvent= findTimeOfNextEvent(jobs);
+            assert(timeOfNextEvent > time);
             time = timeOfNextEvent;
             
             int nextDepartureTime = -1;
@@ -90,6 +91,7 @@ public class Simulator {
             //first come first serve, add to end of line
         }
         else if ( this.policy == Policy.SHORTEST_FIRST){
+            //https://stackoverflow.com/a/19067509
             int i = 0;
             while (j.serviceLength>queue.get(i).serviceLength){
                 i++;
