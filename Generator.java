@@ -6,7 +6,8 @@ public class Generator {
 
     //somehow create a list of jobs sorted by arrival time
 
-    public LinkedList<Job> generateJobList(int number){
+    public static LinkedList<Job> generateJobList(int number){
+
         LinkedList<Job> toReturn = new LinkedList<Job>();
         Random r = new Random();
         int maxTime = number * 10;
@@ -15,14 +16,14 @@ public class Generator {
             Job j = new Job(r.nextInt(1000), r.nextInt(maxTime));
             toReturn.add(j);
         }
-
+        sortJobList(toReturn);
 
         return toReturn;
     }
 
 
 
-    void sortJobList(LinkedList<Job> l){
+    static void sortJobList(LinkedList<Job> l){
         Collections.sort(l);
     }
 
