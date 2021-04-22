@@ -5,7 +5,7 @@ import java.io.FileWriter;
 
 enum Policy{FCFS, LCFS, SHORTEST_FIRST, LONGEST_FIRST, RANDOM;}
 
-public class Simulator {
+public class Server {
 
     Policy policy;
 
@@ -17,7 +17,7 @@ public class Simulator {
 
     Job currentJob;
 
-    public Simulator(Policy p){
+    public Server(Policy p){
         time=0;
         timeOfNextEvent=0;
         queue= new LinkedList<Job>();
@@ -84,7 +84,7 @@ public class Simulator {
         //This prevents any null pointers from an empty list
         }
         
-        //If there already is a queue, then add according to the policy of this instance of Simulator
+        //If there already is a queue, then add according to the policy of this instance of Server
         //Process always takes from the fron of the queue
         if (this.policy == Policy.FCFS){
             queue.addLast(j);

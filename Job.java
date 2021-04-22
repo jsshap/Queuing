@@ -19,6 +19,7 @@ public class Job implements Comparable<Job>{
         
     }
 
+    @Override
     public int compareTo(Job j) {
         //positive if this instance is greater
         //negative if this instance is less
