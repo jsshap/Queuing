@@ -1,15 +1,25 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-data = pd.read_csv("highPData.csv")
-
-x = data['p']
-E_N = data['E[N]']
-E_T = data['E[T]']
 
 
-plt.plot(x, E_N, label = "E[N] vs. p")
-plt.plot(x, E_T, label = "E[T] vs. p")
+import glob
+path = "*.csv"
+print (glob.glob(path))
+for fname in glob.glob(path):
+    print(fname)
+        
+    data = pd.read_csv(fname)
+
+    x = data['p']
+    E_N = data['E[N]']
+    E_T = data['E[T]']
+
+    labelN = "E[N] vs. p for " + fname
+    labelT = "E[T] vs. p for " + fname
+
+    plt.plot(x, E_N, label = labelN)
+    plt.plot(x, E_T, label = labelT)
 
 
 '''
@@ -28,6 +38,10 @@ plt.legend(loc = "best")
 plt.title("Response time and Jobs in System versus p")
 plt.xlabel("p")
 plt.ylabel("Expected Values")
+
+
+#this line for more focus on the upper end where the data change
+#plt.xlim(.47, .50)
 
 plt.show()
 
