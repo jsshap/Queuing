@@ -1,37 +1,26 @@
-public class Job implements Comparable<Job>{
+public class Job{
 
-    final int serviceLength;//work needed on the job
-    final int arrivalTime;
+    int arrivalTime;
+    int departureTime;
+    int serviceTime;
+    int totalTime;
+    int timeSpentInQueue;
 
-    int departureTime=0;
-    int timeInQ=0;
-    int totalTime=0;//service time and time in q
-
-    public Job(int serviceLength, int arrivalTime){
-        this.serviceLength = serviceLength;
-        this.arrivalTime = arrivalTime;
+    public Job(int arrivalTime, double q){
+        this.arrivalTime=arrivalTime;
+        this.serviceTime=Generation.generateGeometric(q);
     }
 
-    public void calculateValues(){
-        timeInQ = departureTime-serviceLength-arrivalTime;
-        totalTime=serviceLength+timeInQ;
-        
-        
-    }
+    public String toString(){
+        String s = "";
 
-    @Override
-    public int compareTo(Job j) {
-        //positive if this instance is greater
-        //negative if this instance is less
-        //0 if equal
-        if (this.arrivalTime < j.arrivalTime){
-            return -1;
-        }
-        else if (this.arrivalTime > j.arrivalTime){
-            return 1;
-        }
-        else{
-            return 0;
-        }
+        s+=("JOB--------\n");
+        s+=("Arrival: " + arrivalTime +"\n");
+        s+= "Spent in q: "+ timeSpentInQueue +"\n";
+        s+="Service Time: "+ serviceTime +"\n";
+        s+= ("Departure Time: "+ departureTime + "\n");
+        s+=("==========\n");
+
+        return s;
     }
 }
