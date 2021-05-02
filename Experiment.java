@@ -8,13 +8,13 @@ public class Experiment {
 
 
         for (Policy pol : Policy.values()){
-            String filename = pol.name() + "data.csv";
+            String filename = pol.name() + "datap=.55.csv";
             try{
                 PrintStream csvFile = new PrintStream(filename);
 
                 System.setOut(csvFile);
                 System.out.println("p,E[N],E[T]\n"); 
-                for (double p =.01; p <.51; p+=.01){
+                for (double p =.01; p <.55; p+=.01){
                     Server s = new Server(p, .5, pol);
                     s.simulate(300000);
                     //Here, we want to write to a file

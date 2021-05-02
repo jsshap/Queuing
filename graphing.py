@@ -2,24 +2,25 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-
+#https://stackoverflow.com/questions/14262405/loop-through-all-csv-files-in-a-folder
 import glob
 path = "*.csv"
 print (glob.glob(path))
-for fname in glob.glob(path):
-    print(fname)
+sublist = [file for file in glob.glob(path)]
+for fname in sublist:
+    
         
     data = pd.read_csv(fname)
 
     x = data['p']
     E_N = data['E[N]']
-    E_T = data['E[T]']
+    #E_T = data['E[T]']
 
     labelN = "E[N] vs. p for " + fname
-    labelT = "E[T] vs. p for " + fname
+    #labelT = "E[T] vs. p for " + fname
 
     plt.plot(x, E_N, label = labelN)
-    plt.plot(x, E_T, label = labelT)
+    #plt.plot(x, E_T, label = labelT)
 
 
 '''
@@ -35,13 +36,13 @@ plt.plot(verifyP, vet)
 '''
 
 plt.legend(loc = "best")
-plt.title("Response time and Jobs in System versus p")
+plt.title("Jobs in System versus p")
 plt.xlabel("p")
 plt.ylabel("Expected Values")
 
 
 #this line for more focus on the upper end where the data change
-#plt.xlim(.47, .50)
+plt.xlim(.44, .50)
 
 plt.show()
 
