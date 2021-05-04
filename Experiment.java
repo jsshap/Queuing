@@ -8,7 +8,7 @@ public class Experiment {
 
 
         for (Policy pol : Policy.values()){
-            String filename = pol.name() + "datap=.55.csv";
+            String filename = pol.name() + "_variance.csv";
             try{
                 PrintStream csvFile = new PrintStream(filename);
 
@@ -21,10 +21,17 @@ public class Experiment {
                     s.processData();//Currently processData prints to stout
                     //If there were a way to change what stout between line 7 and 8, that would do it
                 }
+                for (int n = 0; n < 300; n++) {
+                    Server s = new Server(.5,.5,pol);
+                    s.simulate(300000);
+                    s.computeVariance();
+                }
             }
             catch(FileNotFoundException e){};
             //Here we want to change the file we write to
         }
+    
+
 
     }
 }

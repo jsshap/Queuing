@@ -162,4 +162,13 @@ public class Server {
         double E_T = totalResponseTime / (double)(completed.size());
         System.out.println(pArrival +"," + E_N + "," +E_T);
     }
+
+    void computeVariance() {
+        int totalInSystem = 0;
+        for (int a: jobsInSystem){
+            totalInSystem += a;
+        }
+        double E_N = totalInSystem/(double)(numArrivals-offset);
+        System.out.println(E_N);
+    }
 }
