@@ -8,21 +8,17 @@ import glob
 path = "*variance.csv"
 print (glob.glob(path))
 sublist = [file for file in glob.glob(path)]
-table_data = pd.DataFrame(columns=['Policy','Variability'])
+table_data = pd.DataFrame(columns=['Policy','Variance (*100,000)'])
 for fname in sublist:
     
     data = pd.read_csv(fname,squeeze=True)
-    mean = data.mean()
-    sum = 0
-    for i in range(0,299):
-        sum += (data[i] - mean)**2
-    emp = sum / (299 - 1)
-    #squared = emp / 
-    table_data = table_data.append({'Policy':re.sub('_variance.csv','',fname),'Variability':emp},ignore_index=True)
+    var = (data.var()/100000).round(3)
+    
+    table_data = table_data.append({'Policy':re.sub('_variance.csv','',fname),'Variance (*100,000)':var},ignore_index=True)
 
 print(table_data)
 fig,ax = plt.subplots()
-fig.patch.set_visible(False)
+fig.patch.set_visible(True)
 ax.axis('off')
 ax.axis('tight')
 table = ax.table(cellText = table_data.values,loc='center')

@@ -164,11 +164,8 @@ public class Server {
     }
 
     void computeVariance() {
-        int totalInSystem = 0;
-        for (int a: jobsInSystem){
-            totalInSystem += a;
+        for (Job j : completed){
+            System.out.println(j.totalTime);
         }
-        double E_N = totalInSystem/(double)(numArrivals-offset);
-        System.out.println(E_N);
     }
 }
