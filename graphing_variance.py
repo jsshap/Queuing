@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 import re
 
 
@@ -12,9 +13,12 @@ table_data = pd.DataFrame(columns=['Policy','Variance (*100,000)'])
 for fname in sublist:
     
     data = pd.read_csv(fname,squeeze=True)
-    var = (data.var()/100000).round(3)
+    #var = (data.var()/100000).round(3)
+    cv = lambda x: np.std(x, ddof=1) / np.mean(x) * 100 
     
-    table_data = table_data.append({'Policy':re.sub('_variance.csv','',fname),'Variance (*100,000)':var},ignore_index=True)
+    a = cv(data)
+
+    table_data = table_data.append({'Policy':re.sub('_variance.csv','',fname),'Variance (*100,000)':a},ignore_index=True)
 
 print(table_data)
 fig,ax = plt.subplots()

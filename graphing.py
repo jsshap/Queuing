@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import glob
 path = "*.csv"
 print (glob.glob(path))
-sublist = [file for file in glob.glob(path)]
+sublist = [file for file in glob.glob(path) if not "var" in file]
 for fname in sublist:
     
         
@@ -16,8 +16,8 @@ for fname in sublist:
     E_N = data['E[N]']
     #E_T = data['E[T]']
 
-    labelN = "E[N] vs. p for " + fname
-    #labelT = "E[T] vs. p for " + fname
+    labelN = "Mean Jobs in System vs. p for " + fname
+    #labelT = "Mean Response Time vs. p for " + fname
 
     plt.plot(x, E_N, label = labelN)
     #plt.plot(x, E_T, label = labelT)
